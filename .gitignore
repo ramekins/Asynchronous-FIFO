@@ -1,0 +1,13 @@
+# personal notes, not part of the deliverable
+notes/
+
+# Vivado junk, in case any ever lands in the repo
+*.jou
+*.log
+*.str
+.Xil/
+*.cache/
+*.sim/
+*.hw/
+*.runs/
+*.ip_user_files/
