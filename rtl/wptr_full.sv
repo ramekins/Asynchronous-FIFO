@@ -24,8 +24,11 @@
 // 
 // in this instance, we also convert the binary value of the write
 // pointer, convert it into grey code which is intended to save
-// data across clock domains, and once it's in the new clock domain
-// convert it back into binary.
+// data across clock domains. after it's been converted into grey
+// code, compare the addresses to determine if FIFO is full or 
+// empty. when comparing in grey code, it is the same method
+// as in binary, except when doing in grey code we are actually
+// comparing the first TWO bits instead of only the MSB.
 
 module wptr_full #(parameter ADDR_WIDTH = 4)(
     input wclk,                         // write clock
