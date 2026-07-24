@@ -1,4 +1,6 @@
-// convert a binary number to grey code number
+// bin2grey
+//
+// purpose: convert a binary number to grey code number
 // how it works: start with binary number, shift it right 1 place, and XOR it with the original number
 
 // for example 101 -> 101 ^ 010 = 111
@@ -13,8 +15,8 @@ module bin2grey #(parameter WIDTH = 4)
 
 endmodule
 
-
-// convert a grey code number to binary
+// grey2bin
+// purpose: convert a grey code number to binary
 // how it works: start with with the MSB 
 // your MSB input will always equal your MSB output
 // e.g; Y4 = X4 (x input, y output)

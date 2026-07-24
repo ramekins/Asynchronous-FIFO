@@ -1,3 +1,8 @@
+// fifo_mem
+//
+// purpose: it's just the memory of the FIFO.
+//
+
 module fifo_mem #(parameter DATA_WIDTH = 8,
     parameter ADDR_WIDTH = 4)(
     input wclk, // write clock

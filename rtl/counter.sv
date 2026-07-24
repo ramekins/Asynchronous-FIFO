@@ -1,3 +1,9 @@
+// counter
+//
+// purpose: a simple counter 
+// i made, meant just to test 
+// vivado studio :3
+
 module counter( 
     input clk,
     input rst_n,
