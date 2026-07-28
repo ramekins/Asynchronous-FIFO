@@ -1,8 +1,23 @@
 // fifo
 //
+// wraps all six submodules into one block that safely passes data
+// between two independent clock domains (wclk for write and rclk for read)
 //
+// how the pieces fit:
+//   fifo_mem    — dual-port RAM: written in wclk domain, read in rclk domain
+//   wptr_full   — write pointer + full flag  (write domain)
+//   rptr_empty  — read pointer + empty flag  (read domain)
+//   synchro x2  — two-flop synchronizers that carry each Gray pointer
+//                 into the OTHER clock domain
 //
+// the CDC safety comes from two mechanisms working together:
+//   1. pointers are Gray-coded, so only one bit changes per step —
+//      a mid-transition sample can't produce a garbage multi-bit value
+//   2. each pointer is double-flopped when crossing domains, so
+//      metastability has a full cycle to settle before it's used
 //
+// each pointer crosses to the opposite domain so the local flag logic
+// can compare its own pointer against the synchronized remote one.
 
 module fifo #(parameter DATA_WIDTH = 8, ADDR_WIDTH = 4) (
     // write
