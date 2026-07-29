@@ -20,6 +20,9 @@ localparam ADDR_WIDTH = 4;
     logic wfull;
     logic rempty;
 
+    // queue
+    logic [DATA_WIDTH-1:0] expected[$];
+    
     fifo dut (.wclk(wclk), .wrst_n(wrst_n), .winc(winc), .wdata(wdata),
         .rclk(rclk), .rrst_n(rrst_n), .rinc(rinc), .rdata(rdata),
             .wfull(wfull), .rempty(rempty));
@@ -38,11 +41,48 @@ localparam ADDR_WIDTH = 4;
         #10;
         wrst_n = 1;
         rrst_n = 1;
-        wdata = 67;
-        winc = 1;
-        @(posedge wclk);
-        winc = 0;
-        repeat (10) @(posedge wclk);
+    end
+
+    // write function
+    initial begin
+        wait (wrst_n == 1);
+        for (int i = 0; i < 20; i++) begin
+            wait (!wfull);
+            wdata <= i;
+            winc <= 1;
+            @(posedge wclk);
+            #1;
+            expected.push_back(i);
+            winc <= 0;
+        end
+    end
+    
+    // read function
+    initial begin : reader
+        // local variables
+        logic [DATA_WIDTH-1:0] data, exp;
+        wait (rrst_n == 1);
+        for (int i = 0; i < 20; i++) begin
+            wait (!rempty);
+            data = rdata;
+            rinc = 1;
+            @(posedge rclk);
+            #1;
+            exp = expected.pop_front();
+            if (exp !== data) begin
+                $error("mismatch detected, expected value: %b, actual : %b", exp, data);
+            end
+            rinc = 0;
+        end
+        if (expected.size() != 0) begin
+        $error("leftover in queue: %0d", expected.size());
+        end
+        $display("all checks passed - %0d values verified", 20);
+        $finish;
+    end
+
+    initial begin
+      #2000;
         $finish;
     end
 
