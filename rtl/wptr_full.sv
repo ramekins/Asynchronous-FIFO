@@ -42,7 +42,7 @@ module wptr_full #(parameter ADDR_WIDTH = 4)(
 
 logic [ADDR_WIDTH:0] wbin, wgrey, wbin_next, wgrey_next; // start with write - write binary, grey code, and its next values
 logic wfull_next; // 
-assign wbin_next = wbin + winc;
+assign wbin_next = wbin + (winc & ~wfull);
 assign wgrey_next = wbin_next ^ (wbin_next >> 1);
 assign wfull_next = (wgrey_next == {~rptr_sync[ADDR_WIDTH:ADDR_WIDTH-1], 
 rptr_sync[ADDR_WIDTH-2:0]});

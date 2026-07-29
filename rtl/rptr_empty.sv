@@ -24,7 +24,7 @@ module rptr_empty #(parameter ADDR_WIDTH = 4)(
 
 logic [ADDR_WIDTH:0] rbin, rgrey, rbin_next, rgrey_next; 
 logic rempty_next; 
-assign rbin_next = rbin + rinc;
+assign rbin_next = rbin + (rinc & ~rfull);
 assign rgrey_next = rbin_next ^ (rbin_next >> 1);
 assign rempty_next = (rgrey_next == wptr_sync); // here!
 
