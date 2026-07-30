@@ -125,7 +125,7 @@ A somewhat more detailed explanation can be found within the files `wptr_full.sv
 | `tb/tb_fifo.sv` | The main functional test - two-clock scoreboard testbench. |
 | `tb/tb_fifo_corner.sv` | Directed corner-case tests, i.e. me trying to break my own FIFO on purpose. |
 | `tb/tb_greybinconv.sv` | Exhaustive test of the grey converters. |
-| `sandbox/` | A tiny 4-bit counter and its testbench, which I used on day one to prove the Vivado simulation flow worked before writing any FIFO code. Not part of the design, kept for posterity. |
+| `fluff/` | A tiny 4-bit counter and its testbench, which I used on day one to prove the Vivado simulation flow worked before writing any FIFO code. Not part of the design, kept for posterity. |
 
 ---
 
